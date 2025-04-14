@@ -1,23 +1,79 @@
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useState, FormEvent } from "react";
 import "./styles.css";
 import { LayoutComponents } from "../../components/LayoutComponents";
+import axios, { AxiosError } from "axios";
+
+type LoginResponse = {
+  token?: string;
+  user?: {
+    id: string;
+    name: string;
+    email: string;
+  };
+  message?: string;
+};
 
 export const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+
+    if (!email || !password) {
+      setError("Por favor, preencha todos os campos");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const response = await axios.post<LoginResponse>(
+        "http://localhost:8080/login",
+        {
+          email,
+          password,
+        }
+      );
+
+      if (response.data.token) {
+        localStorage.setItem("authToken", response.data.token);
+        
+        navigate("/dashboard");
+      } else {
+        setError(response.data.message || "Login falhou");
+      }
+    } catch (err) {
+      const axiosError = err as AxiosError<LoginResponse>;
+      setError(
+        axiosError.response?.data?.message ||
+          axiosError.message ||
+          "Erro ao fazer login"
+      );
+      console.error("Erro no login:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <LayoutComponents>
       <span className="login-form-title">Login</span>
-      <form action="" className="login-form">
+      {error && <div className="error-message">{error}</div>}
+      <form onSubmit={handleSubmit} className="login-form">
         <div className="wrap-input">
           <input
             className={email !== "" ? "has-val input" : "input"}
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            required
           />
           <span className="focus-input" data-placeholder="Email"></span>
         </div>
@@ -28,6 +84,8 @@ export const Login = () => {
             type={showPassword ? "text" : "password"}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            required
+            minLength={6}
           />
           <span className="focus-input" data-placeholder="Senha"></span>
 
@@ -42,11 +100,18 @@ export const Login = () => {
         </div>
 
         <div className="container-login-form-btn">
-          <button className="login-form-btn">ENTRAR</button>
+          <button
+            className="login-form-btn"
+            type="submit"
+            disabled={loading}
+            aria-busy={loading}
+          >
+            {loading ? "Carregando..." : "ENTRAR"}
+          </button>
         </div>
 
         <div className="login-create-account">
-          <span className="text1">Não possuí uma conta?</span>
+          <span className="text1">Não possui uma conta?</span>
           <Link to="/cadastro" className="text2">
             Criar conta.
           </Link>
