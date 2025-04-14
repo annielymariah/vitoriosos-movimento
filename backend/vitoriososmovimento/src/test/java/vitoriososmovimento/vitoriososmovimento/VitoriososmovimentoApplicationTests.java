@@ -1,10 +1,10 @@
-package com.vitoriososmovimento.demo;
+package vitoriososmovimento.vitoriososmovimento;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class DemoApplicationTests {
+class VitoriososmovimentoApplicationTests {
 
 	@Test
 	void contextLoads() {
