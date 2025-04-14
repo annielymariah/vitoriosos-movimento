@@ -1,3 +1,0 @@
-# Vitoriosos Movimento
-
-## Começando
