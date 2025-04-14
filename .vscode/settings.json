@@ -1,6 +1,5 @@
 {
-    "java.compile.nullAnalysis.mode": "disabled",
     "conventionalCommits.scopes": [
-        "login"
+        "register"
     ]
 }

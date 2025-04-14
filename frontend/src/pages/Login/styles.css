@@ -1,0 +1,182 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Staatliches&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body,
+html {
+  font-family: "Inter", sans-serif;
+}
+
+.login-form {
+  width: 100%;
+}
+
+.login-form-title {
+  font-family: "Staatliches", sans-serif;
+  display: block;
+  font-size: 4rem;
+  color: rgb(0, 0, 0);
+  text-shadow: 0em 0.1em #31d92b;
+  margin-bottom: 48px;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.wrap-input {
+  width: 100%;
+  position: relative;
+  border-bottom: 2px solid #adadad;
+  margin-bottom: 37px;
+}
+
+.input {
+  font-size: 1rem;
+  color: #0c0c0c;
+  line-height: 1.2;
+  border: none;
+  display: block;
+  width: 100%;
+  height: 45px;
+  background-color: transparent;
+  padding: 0 5px;
+  font-family: "Inter", sans-serif;
+}
+
+.focus-input {
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  color: #adadad;
+  font-family: "Inter", sans-serif;
+}
+
+.focus-input::before {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+  background: #6829c6;
+  background: -webkit-linear-gradient(to left, #6829c6, #31d92b);
+  background: -o-linear-gradient(to left, #6829c6, #31d92b);
+  background: -moz-linear-gradient(to left, #6829c6, #31d92b);
+  background: linear-gradient(to left, #6829c6, #31d92b);
+}
+
+.focus-input::after {
+  font-family: "Inter", sans-serif;
+  font-size: 1rem;
+  color: #999999;
+  line-height: 1.2;
+  content: attr(data-placeholder);
+  display: block;
+  width: 100%;
+  position: absolute;
+  top: 16px;
+  left: 0px;
+  padding-left: 5px;
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+}
+
+.input:focus {
+  outline: 0;
+}
+
+.input:focus + .focus-input::after {
+  top: -16px;
+}
+
+.input:focus + .focus-input::before {
+  width: 100%;
+}
+
+.has-val + .focus-input::after {
+  top: -16px;
+}
+
+.has-val + .focus-input::before {
+  width: 100%;
+}
+
+.container-login-form-btn {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-bottom: 13px;
+}
+
+.login-form-btn {
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  line-height: 1.2;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+  background: #0c0c0c;
+}
+
+.login-form-btn:hover {
+  cursor: pointer;
+  background: #31d92b;
+  color: #0c0c0c;
+  transition: all 0.4s;
+}
+
+.login-create-account {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.login-create-account .text1 {
+  font-size: 0.875rem;
+  color: #adadad;
+  line-height: 1.5;
+  padding-right: 5px;
+}
+
+.login-create-account .text2 {
+  font-size: 0.875rem;
+  color: #9e56eb;
+  line-height: 1.5;
+  text-decoration: none;
+}
+
+.wrap-input.password-input {
+  padding-right: 40px;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
