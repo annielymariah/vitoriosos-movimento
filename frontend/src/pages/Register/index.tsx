@@ -11,15 +11,43 @@ export const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       setPasswordError("As senhas não coincidem");
       return;
     }
+  
     setPasswordError("");
-    console.log("Cadastro enviado:", { name, cpf, email, password });
-  };
+  
+    try {
+      const resposta = await fetch("http://localhost:8080/api/usuarios", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          nome: name,
+          email,
+          senha: password
+        }),
+      });
+  
+      if (resposta.status === 201) {
+        alert("Usuário cadastrado com sucesso!");
+        setName("");
+        setCpf("");
+        setEmail("");
+        setPassword("");
+        setConfirmPassword("");
+      } else if (resposta.status === 409) {
+        alert("E-mail já está cadastrado!");
+      } else {
+        alert("Erro ao cadastrar usuário.");
+      }
+    } catch (error) {
+      console.error("Erro na requisição:", error);
+      alert("Erro de conexão com o servidor.");
+    }
+  };  
 
   return (
     <LayoutComponents>
